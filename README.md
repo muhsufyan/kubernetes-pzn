@@ -1,12 +1,7 @@
-# Install
-install dilocal kadang terjd error, ini wajar, jika ingin langsung saja di server<br>
-for install on local bisa menggunakan docker / minikube (lbh ribet dr docker, need hyper-v / virtualBox), link minikube https://github.com/kubernetes/minikube<br>
-di local (baik docker/minikube) hanya suppoer 1 node saja, jika ingin banyak node hrs di server<br>
-untuk berkomunikasi dg kube-api maka hrs sesuai format, agar memudahkan gunakan kubectl<br>
-kubectl used for berinteraksi dg cluster kubernetes<br> 
-https://kubernetes.io/id/docs/tasks/tools/<br>
-masukkan kubectl kedlm path agar dpt diakses dimana saja<br>
-cek kubernetes jln/tdk, perintah => kubectl version<br>
-hrs ada Client Version (kubectl) & Server Version (kubernetes cluster)<br>
-minikube => minikube stop<br>
-minikube start<br>
+# kubernetes nodes
+kubernetes nodes/workers, versi lama disbt minion
+berbentuk vm / mesin fisik (server asli)
+setiap node terdiri atas kubelet, kube-proxy, container manager(memanage container ex docker, dll)
+
+lihat semua node => kubectl get node atau bisa juga kubectl get no
+lihat detail node => kubectl describe node {nama_node_nya} ex nama node-nya minikube => kubectl describe node minikube
