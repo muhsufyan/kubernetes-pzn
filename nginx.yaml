@@ -1,0 +1,11 @@
+# config file akan di submit/push to kubernetes master (api kubernetes)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
