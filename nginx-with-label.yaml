@@ -2,7 +2,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+# nama pod adlh nginx, nama pod hrs unik (tdk blh sama dg nama pod lainnya)
+  name: nginx-with-label
+  labels:
+    team: finance
+    # versi app
+    version: 1.0.0
+    environment: production
+    # dll
 spec:
   containers:
     - name: nginx
