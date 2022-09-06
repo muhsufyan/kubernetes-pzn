@@ -3,10 +3,10 @@ kind: Pod
 metadata:
   name: pod-name
   labels:
-    # key label tdk blh ada spasi
     label-key1: label-value1
-    label-key2: label-value2
-    label-key3: label-value3
+  annotations:
+    annotation-key1: annotation-value
+    annotation-key2: veri long annotation value, bla bla bla bla bla bla
 spec:
   containers:
     - name: container-name

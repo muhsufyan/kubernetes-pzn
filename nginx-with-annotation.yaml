@@ -1,15 +1,16 @@
-# config file akan di submit/push to kubernetes master (api kubernetes)
+# config file ini akan di submit/push to kubernetes master (api kubernetes)
 apiVersion: v1
 kind: Pod
 metadata:
 # nama pod adlh nginx, nama pod hrs unik (tdk blh sama dg nama pod lainnya)
-  name: nginx-with-label
+  name: nginx-with-annotation
   labels:
     team: finance
-    # versi app
     version: 1.0.0
     environment: production
-    # dll
+  annotations:
+    description: aplikasi ini dibuat untuk tim finance
+    json: data didalam annotation dapat berupa json
 spec:
   containers:
     - name: nginx
