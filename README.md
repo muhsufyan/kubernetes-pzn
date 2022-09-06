@@ -27,3 +27,5 @@ melihat detail suatu pod tertentu (lbh detail lagi untuk 1 pod) => kubectl descr
 mengakses pod (hanya mengetes saja (nyala/tdk), bkn expose port keluar. hal ini tdk dilakukan diproduction. untuk production menggunakan service) => kubectl port-forward namapod portAkses:portPod<br>
 ex kubectl port-forward nginx 8888:80 artinya pod nginx dpt diakses dilokal melalui port 8888 yg akan diforward ke port nginx yaitu 80 (80 adlh port milik pod nginx & terisolasi)<br>
 # NOTE : TEMPLATE CONFIG FILE YG KITA COPAS DISINI BERASAL DARI LINK https://github.com/khannedy/belajar-kubernetes, & AKAN SELALU DIUPDATE OLEH PENULISNYA JD LIHAT SAJA GITHUB KHANNEDY TSB. DISINI HANYA MENAMBAHKAN KETERANGAN SAJA
+
+# menghapus pod
