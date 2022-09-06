@@ -1,0 +1,7 @@
+# ini adlh config file yg akan disubmit ke kubernetes master
+apiVersion: v1
+# kind-nya adalah Namespace
+kind: Namespace
+metadata:
+# ini adlah nama namespace. scopenya adlh cluster
+  name: finance

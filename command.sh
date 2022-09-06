@@ -1,24 +1,16 @@
-# submit config file ke kubernetes master
-kubectl create -f nginx-with-annotation.yaml
+# submit config file to kubernetes master
+kubectl create -f finance-namespace.yaml
 
-# see all pod
-kubectl get pod
-
-# show all label
-kubectl get pods --show-labels
-
-# show spesific pod with annotation
-kubectl describe pod nginx-with-annotation
-
-# add annotation in spesific pod 
-kubectl annotate pod namapod key=value
+# buat pod didlm namespace yg telah dibuat sblmnya
+kubectl create -f configfilename.yaml --namespace {nama namespace}
 # ex
-kubectl annotate pod nginx-with-annotation description="hanya boleh digunakan untuk development"
+kubectl create -f finance-namespace.yaml --namespace finance
 
-# change annotation in spesific pod
-kubectl annotate pod namapod key=value --overwrite
+# show all pod inside finance namespace
+kubectl get pod --namespace finance
+
+# menghapus namespace, semua resource didlm namespace yg dihapus akan terhapus.
+kubectl delete namespace {nama namespace yg dihapus}
+
 # ex
-kubectl annotate pod nginx-with-annotation description="hanya tim finance yang dapat mengakses" --overwrite
-
-# show detail spesific pod
-kubectl describe pod nginx-with-annotaion
+kubectl delete namespace finance
