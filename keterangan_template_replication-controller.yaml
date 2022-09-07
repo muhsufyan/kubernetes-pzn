@@ -1,0 +1,41 @@
+# confi file for make pod with Replication Controller
+apiVersion: v1
+# jenisnya replication controller
+kind: ReplicationController
+metadata:
+  name: nama-replication-controller
+  # label & annotaion ini milik replication controller bkn pod
+  labels:
+    label-key1: label-value1 
+  annotations:
+    annotation-key1: annotation-value1
+spec:
+# jumlah pod yg ingin kita buat, disini akan dibuat 3 pod & if ada pod yg mati akan di run ulang
+  replicas: 3
+  # untuk menselect pod-nya, if tdk dpt selector sebanyak replicas (3) maka akan di run ulang
+  selector:
+  # label selector ini harus sama dg label di template, baik key & value harus sama persis
+    label-key1: label-value1
+    # app: nginx
+  template:
+    metadata:
+    # nama pod akan ditambh kode unik jd tdk perlu khawatir nama pod-nya sama. 
+      name: nama-pod
+      labels:
+        label-key1: label-value1
+        # app: apache #ini tdk boleh karena label selector untuk key app tdk sama (nginx != apache hrs sama yaitu nginx == nginx)
+    spec:
+      containers:
+        - name: container-name
+          image: image-name
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            timeoutSeconds: 1
