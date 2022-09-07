@@ -23,3 +23,23 @@ curl http://nginx-service.default.svc.cluster.local:8080
 
 # show all endpoint
 kubectl get endpoints
+
+# show detail service endpoint
+kubectl describe service nama-service
+# show endpoint yg ditembak oleh service
+kubectl get endpoints nama-service 
+
+# EXTERNAL SERVICE
+kubectl create -f service-example.com
+kubectl get all
+# TYPE ExternalName CLUSTER-IP nya none (karena dns) EXTERNAL-IP akan mengarah ke example.com
+kubectl get endpoints 
+# tdk ada example-service karena tdk punya endpoint pod
+kubectl get all
+kubectl exec -it curl -- /bin/sh
+curl http://example-service.default.svc.cluster.local
+exit
+
+kubectl delete all --all
+kubectl create -f service-example.yaml
+kubectl get endpoints

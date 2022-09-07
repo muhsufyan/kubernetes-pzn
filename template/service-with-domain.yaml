@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-service
+  labels:
+    label-key1: label-value1
+spec:
+# tambah type ExternalName untuk external service (if no set, default-nya ClusterIP)
+  type: ExternalName 
+  # saat mengakses external-service (nama untuk external service) maka akan diteruskaan dg mengirim ke example.com
+  externalName: example.com
+  ports:
+    - port: 80
