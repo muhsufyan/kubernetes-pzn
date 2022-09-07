@@ -1,0 +1,52 @@
+# buat replica set
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx
+  # template untuk pod
+  template:
+    metadata:
+      name: nginx
+      labels:
+      # label agar pod dpt diakses oleh service. (name: nginx) ini paling penting, labelnya nginx dg key name
+        name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+
+---
+# buat service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+  # label selector hrs sama dg replica set yaitu name: nginx
+    name: nginx
+  ports:
+  # port untuk service
+    - port: 8080
+    # nginx run di port 80
+      targetPort: 80
+
+---
+# buat pod (untuk coba coba) scra manual, kita akan coba pod ini akan mengakses pod di replica set lewat service
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+  labels:
+    name: curl
+spec:
+  containers:
+    - name: curl
+      image: khannedy/nginx-curl

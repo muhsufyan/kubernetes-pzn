@@ -1,0 +1,16 @@
+# config file
+apiVersion: v1
+# jenisnya service
+kind: Service
+metadata:
+  name: service-name
+spec:
+# harus ngisi selector
+  selector:
+  # label (key:value) hrs == label pod yg dipilih/ditentukan
+    label-key1: label-value1
+  ports:
+  # port service
+  - port: 8080
+  # di pod-nya akan mengakses port 80
+    targetPort: 80
