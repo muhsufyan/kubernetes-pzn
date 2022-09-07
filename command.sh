@@ -1,16 +1,16 @@
-# add label to node
-kubectl label node {nama node} key=value
-# ex
-kubectl get nodes
-# add label to node minikube yaitu gpu
-kubectl label node minikube gpu=true
-kubectl describe node minikube 
+# show all resources
+kubectl get all
 
-kubectl create -f nginx-node-selector.yaml
-kubectl create -f templates/replica-set-node-selector.yaml
+# namespace
+kubectl get --namespace {nama namespace}
 
+# resource itu dpt bermacam macam sprti pod, cronjobs, jobs, dll
+kubectl get {jenis resources} {nama resourcesnya}
+# default namespace
 kubectl get pods
-# lihat STATUS => ContainerCreating (container tlh dibuat/ada)
-# if STATUS => Pending artinya tdk ada node yg memiliki label yg sesuai, akan terus pending sampai ada node dg label yg dicari
-kubectl delete pod nginx
+kubectl get jobs
 
+# delete all resources
+kubectl delete all --all
+# delete di namespace tertentu
+kubectl delete all --all  --namespace {nama namespace}
