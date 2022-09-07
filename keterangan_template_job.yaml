@@ -1,33 +1,31 @@
-# confi file for make job
+# confi file for make cron job
 # pake batch versi 1
-apiVersion: batch/v1
-# jenisnya job
-kind: Job
+apiVersion: batch/v1beta1
+kind: CronJob
 metadata:
-  name: job-name
+  name: cron-job-name
   labels:
-    label-key1: label-value1
+    label-key: label-value
   annotations:
     annotation-key1: annotation-value1
 spec:
-# completions & parallelism hrs di define if not will default 1 & 1 
-  # berapa kali job hrs dijlnkan sampai job-nya complete (job akan berjln 5 kali kemudian berhenti) 
-  completions: 5
-  # berapa banyak pod yg berjln dlm satu waktu (pd satu waktu akan ada 2 pod yg jalan, pertama 2 pod nyala, selanjutnya 2 pod lagi nyala, terakhir 1 pod lagi akan nyala (karena kita set 5 diatas))
-  parallelism: 2
-# replica set
-  selector:
-    matchLabels:
-      abel-key1: label-value1
-  template:
-    metadata:
-      name: pod-name
-      labels:
-        label-key1: label-value1
+# jadwal akan dirun sesuai dg format cron job ini
+  schedule: "* * * * *"
+# ujung"nya job maka buat jobTemplate
+  jobTemplate:
     spec:
-      restartPolicy: Never
-      containers:
-        - name: container-name
-          image: image-name
-          ports:
-            - containerPort: 80
+      selector:
+        matchLabels:
+          label-key1: label-value1
+      template:
+        metadata:
+          name: pod-name
+          labels:
+            app: pod-la
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: container-name
+              image: image-name
+              ports:
+                - containerPort: 80

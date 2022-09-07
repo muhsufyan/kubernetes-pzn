@@ -1,15 +1,16 @@
-# JOB
-Sebelumnya kita hanya membahas tentang Pod yang berjalan tanpa henti<br>
-Tapi ada kalanya kita butuh menjalankan perintah yang hanya berjalan sekali, lalu berhenti (ex migrasi)<br>
-Job adalah resource di Kubernetes yang digunakan untuk menjalankan Pod yang hanya butuh berjalan sekali, lalu berhenti<br>
-Pada Replication Controller, Replica Set dan Daemon Set, jika Pod mati, maka secara otomatis Pod akan dijalankan ulang. hal ini Berbeda dengan Job. Pada Job justru Pod akan mati jika pekerjaannya selesai dilakukan<br>
-## contoh case use job
-* Aplikasi untuk backup atau restore database
-* Aplikasi untuk import atau export data 
-* Aplikasi untuk menjalankan proses batch
-* Dan sejenisnya (job/pekerjaan yg dilakukan 1 kali saja)
+# CRON JOB
+Cron Job adalah aplikasi untuk penjadwalan yang biasanya ada di sistem operasi unix<br>
+Dengan menggunakan Cron Job kita bisa menjadwalkan aplikasi berjalan sesuai jadwal yang kita inginkan<br>
+Kubernetes mendukung resource Cron Job, dimana cara kerjanya mirip Job, hanya saja kalo Job berjalan sekali, tapi Cron Job bisa berjalan berulang kali sesuai dengan jadwal yang kita inginkan<br>
+Cron Job juga bisa memungkinkan kita untuk menjalankan aplikasi dengan waktu yang telah ditentukan<br>
 
-<br>
-saat buat job ujung"nya akan membuat pod juga<br>
-template https://github.com/khannedy/belajar-kubernetes/blob/master/templates/job.yaml<br>
-untuk image lihat disini https://github.com/khannedy/belajar-kubernetes/tree/master/images/nodejs-job<br>
+## contoh kasus menggunakan cron job
+* Aplikasi untuk membuat laporan harian
+* Aplikasi untuk membackup data secara berkala
+* Aplikasi untuk mengirim data tagihan tiap bulan ke pihak lain
+* Aplikasi untuk menarik dana pinjaman yang jatuh tempo bulanan
+* Dan sejenisnya
+## belajar / coba" cron job https://crontab.guru/
+pelajari bagimana penulisan cron job yg benar<br>
+
+cron job akan berhenti saat kita delete
