@@ -1,11 +1,17 @@
-# Eksternal Service
-## Apa itu External Service?
-Biasanya Service digunakan sebagai gateway untuk internal Pod<br>
-Tapi Service juga bisa digunakan sebagai gateway untuk aplikasi eksternal yang berada diluar kubernetes cluster (kita buat service eksternal, & app diluar cluster dpt mengakses lewat service eksternal yg dibuat tsb)<br>
-kelebihannya gerbang masuk ke pod dr app diluar hanya ada 1 yaitu service eksternal<br>
+# Mengekspos Service
+Kadang ada kebutuhan kita perlu untuk mengekspos service keluar<br>
+Tujuannya adalah agar aplikasi dari luar kubernetes cluster bisa mengakses Pod yang berada di belakang service tersebut<br>
+## Tipe Service
+* ClusterIP: Mengekpos Service hanya di dalam internal kubernetes cluster
+* ExternalName: Memetakan Service ke externalName (misalnya: example.com). (service untuk nembak ke external. dari dlm kubernetes keluar)
+* NodePort: Mengekspos Service pada setiap IP node dan port yang sama. Kita dapat mengakses Service dengan tipe ini, dari luar cluster melalui <NodeIP>:<NodePort>. (setiap node dlm kubernetes akan dibuatkan 1 pod, & pod ini if diakses maka akan langsung mengakses servicenya, & ipnya adlh node. if megnakses NodePort maka akan redirect ke NodeIP. so if mengakses dr luar tinggal lewat IP Nodenya). (dr luar ke dalam)
+* LoadBalancer: Mengekspos Service secara eksternal dengan menggunakan LoadBalancer yang disediakan oleh penyedia layanan cloud. (dr luar ke dalam)
 
-template ada 2 karena ada yg berupa ip addres, dan domain (dns):<br>
-https://github.com/khannedy/belajar-kubernetes/blob/master/templates/service-with-endpoint.yaml<br>
-https://github.com/khannedy/belajar-kubernetes/blob/master/templates/service-with-domain.yaml<br>
-pd contoh service-example.yaml akan dibuat external service & pod (docker image our app). dimana ketika mengakses pod maka akan redirect/forward ke external-service yaitu example.com<br>
+<br>
+default-nya ClusterIP
+
+## Cara Untuk Mengekspos Service
+* Dengan menggunakan NodePort, sehingga Node akan membuka port yang akan meneruskan request ke Service yang dituju.
+* Dengan menggunakan LoadBalancer, sehingga Service bisa diakses via LoadBalancer, dan LoadBalancer akan meneruskan request ke NodePort dan dilanjutkan ke Service
+* Menggunakan Ingress, dimana Ingress adalah resource yang memang ditujukan untuk mengekspos Service. Namun Ingress hanya beroperasi di level HTTP
 
