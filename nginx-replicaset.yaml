@@ -1,12 +1,13 @@
 # config file akan di submit/push to kubernetes master (api kubernetes)
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
-  name: nginx-rc
+  name: nginx
 spec:
   replicas: 3
   selector:
-    app: nginx
+    matchLabels:
+      app: nginx
   template:
     metadata:
       name: nginx
@@ -14,7 +15,7 @@ spec:
         app: nginx
     spec:
       containers:
-        - name: nginx
-          image: nginx
-          ports:
-            - containerPort: 80
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
