@@ -1,7 +1,5 @@
 # confi file for make pod with Replica Set
-# versinya berbeda (rc : v1 sedangkan rc sprti dibwh ini)
 apiVersion: apps/v1
-# jenisnya ReplicaSet
 kind: ReplicaSet
 metadata:
   name: replica-set-name
@@ -12,17 +10,27 @@ metadata:
 spec:
   replicas: 3
   selector:
-  # disini letak perbedaan rc dg replica set (rs), selector matchLabels itu behavior-nya mirip dg rc.
-  # jenis dr selector tdk hanya matchLabels saja, nanti dibahas lbh lanjut 
+  # jenis label selector matchLabels (hrs sama persis)
     matchLabels:
-    # label rs hrs == label template pod dibawah, sama sprti replication controller
       label-key1: label-value1
+    # jenis label selector matchExpressions (dpt ditambahkan ekspresi/operator). template label milik pod hrs == label matchExpressions
+    matchExpressions:
+      - key1: label-key
+        operator: In
+        values:
+          - label-value1
+      - key2: label-key2
+        operator: In
+        values:
+          - label2-value1
+          - label2-value2
   template:
     metadata:
       name: pod-name
+      # template label milik pod
       labels:
-      # ini adlh label template pod
         label-key1: label-value1
+        label-key2: label2-value2
     spec:
       containers:
       - name: container-name

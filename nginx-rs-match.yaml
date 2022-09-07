@@ -6,13 +6,23 @@ metadata:
 spec:
   replicas: 3
   selector:
-    matchLabels:
-      app: nginx
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - nginx
+      - key: env
+        operator: In
+        values:
+          - development
+          - qa
+          - production
   template:
     metadata:
       name: nginx
       labels:
         app: nginx
+        env: production
     spec:
       containers:
       - name: nginx
