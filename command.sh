@@ -4,7 +4,7 @@ kubectl get services
 # delete service tertentu
 kubectl delete service {nama service}
 # mengakses service dari dlm cluster (like mengakses kedlm container di docker)
-kubectl exac nama-pod -it -- /bin/sh
+kubectl exec nama-pod -it -- /bin/sh
 # saat membuat service akan dibuatkan otomatis httpnya dlm format
 # http://ip-cluster:port/ & ingat, url ini hanya dpt diakses didlm cluster kubernetes (tdk dpt diakses dr luar)
 curl http://ip-cluster:port/
@@ -21,8 +21,8 @@ curl http://CLUSTER-IP:PORT(S)
 # kita harus masuk dulu ke pod 
 kubectl get all # kolom NAME (nama pod)
 # ex masuk ke cluster pod/nginx (pod nginx)
-kubectl exac -it {nama pod} -- /bin/sh
-kubectl exac -it curl -- /bin/sh
+kubectl exec -it {nama pod} -- /bin/sh
+kubectl exec -it curl -- /bin/sh
 # akses service (kita sdh masuk ke pod)
 curl http://CLUSTER-IP:PORT(S)
 # delete all
