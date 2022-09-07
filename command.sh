@@ -1,25 +1,24 @@
 # submit/push  config file ke kubernetes master melalui api kubernetes
-kubectl create -f namafileconfigDaemonset.yaml
+kubectl create -f namafileconfigJob.yaml
 
-# show all daemon set (resources nya daemonsets)
-kubectl get daemonsets
+# show all job
+kubectl get jobs
 
-# delete spesifik daemon set
-kubectl delete daemonsets {nama daemonsets}
+# delete spesifik job
+kubectl delete job {nama jobs}
 
-kubectl create -f daemon-nginx.yaml
-kubectl get daemonsets
-kubectl get nodes
-kubectl get pods
+kubectl create -f job-nodejs.yaml
+kubectl get all
+# if READY = 0 artinya pod mati, 1 pod nyala
 
-# detail daemon sets tertentu
-kubectl describe daemonsets {nama daemon set}
+# detail job tertentu
+kubectl describe job {nama job}
 
-kubectl describe daemonsets daemon-nginx
+kubectl describe job nodejs-job
 
-# hapus daemon sets tertentu
-kubectl delete daemonsets {nama daemon set}
+# hapus job tertentu
+kubectl delete job {nama job}
 
-kubectl delete daemonsets daemon-nginx
+kubectl delete job nodejs-job
 
-kubectl get daemonsets
+kubectl get job

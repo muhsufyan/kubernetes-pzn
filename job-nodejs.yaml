@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nodejs-job
+spec:
+  completions: 4
+  parallelism: 2
+  template:
+    spec:
+      # untuk job restartPolicy harus Never agar tidak restart. if Always maka akan mati trs hidup lagi scra terus menerus
+      restartPolicy: Never
+      containers:
+        - name: nodejs-job
+          image: khannedy/nodejs-job
