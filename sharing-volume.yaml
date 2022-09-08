@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        name: nginx
+    spec:
+    # buat volume di template pod
+      volumes:
+        - name: html
+          emptyDir: {}
+      # container
+      containers:
+        - name: nodejs-writer
+          image: khannedy/nodejs-writer
+          # volume html untuk container 1
+          volumeMounts:
+            - mountPath: /app/html
+              name: html
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+           # volume html untuk container 2
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: html
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  selector:
+    name: nginx
+  ports:
+    - port: 8080
+      targetPort: 80
+      nodePort: 30001
