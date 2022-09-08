@@ -1,7 +1,9 @@
-kubectl create -f multi-container-pod.yaml
 kubectl get all
-kubectl exec -it curl -- /bin/sh
-curl http:{IP}:8080 # nginx
-curl http:{IP}:3000 # nodejs
+kubectl create -f volume.yaml
+kubectl get all
+kubectl exec -it nodejs-writer -- /bin/sh
+cd /app/html
+cat index.html
+# if restart akan hilang karena type volume emptyDir
 
 kubectl delete all --all
