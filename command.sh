@@ -1,15 +1,24 @@
+# show all config map
+kubectl get configmaps
+# show detail a config map
+kubectl describe configmap {nama config map}
+# delete a config map
+kubectl delete configmap {nama config map}
+
+# LATIHAN
 kubectl get all
-kubectl create -f environment-variable.yaml
+kubectl create -f configmap.yaml
 kubectl get all
-# coba akses inside pod nodejs-writer
-kubectl exec -it nodejs-writer -- /bin/sh
+kubectl get configmaps
+kubectl describe configmap nodejs-env-config
+# coba akses inside  salah satu pod 
+kubectl exec -it nodejs-env-xxx -- /bin/sh
 # show all env var
 env
-# cari HTML_LOCATION
-# make sure save to that volume
-cd /app/folder-from-env
-ls 
-# see code html file (update every 5 minutes)
-cat index.html
 exit
+# access service
+minikube service nodejs-env-service
+# buka browser
 kubectl delete all --all
+kubectl get configmaps
+kubectl delete configmap nodejs-env-config

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+# PENULISAN KEY: VALUE LBH BAIK UPPER CASE, MESKIPUN LOWER CASE JUGA BISA TP LBH GAMPANG DIPAHAMI (RULE) KITA GUNAKAN UPPER CASE
+  ENV: VALUE
+  # contoh
+  MONGO_USERNAME: root
+  MONGO_PASSWORD: rahasia
+metadata:
+# nama config map
+  name: configmap-name

@@ -1,20 +1,20 @@
 # Build image
-docker build -t khannedy/nodejs-writer .
+docker build -t khannedy/nodejs-env .
 
-# Push image
-docker push khannedy/nodejs-writer
+# Push container
+docker push khannedy/nodejs-env
 
 # Create container
-docker container create --name nodejs-writer khannedy/nodejs-writer
+docker container create --name nodejs-env khannedy/nodejs-env
 
 # Start container
-docker container start nodejs-writer
+docker container start nodejs-env
 
 # See container logs
-docker container logs -f nodejs-writer
+docker container logs -f nodejs-env
 
 # Stop container
-docker container stop nodejs-writer
+docker container stop nodejs-env
 
 # Remove container
-docker container rm nodejs-writer
+docker container rm nodejs-env
