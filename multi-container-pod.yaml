@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        name: nginx
+    spec:
+      containers:
+      # container 1
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+      # container 2
+        - name: nodejs-web
+          image: khannedy/nodejs-web
+          ports:
+            - containerPort: 3000
+
+---
+# buat 1 service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    name: nginx
+  ports:
+    - port: 8080
+    # nembak ke container 1 (port 8080 akan diforward ke port 80)
+      targetPort: 80
+      name: nginx
+    - port: 3000
+    # nembak ke container 2 (port 3000 akan diforward ke port 3000)
+      targetPort: 3000
+      name: nodejs-web
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+  labels:
+    name: curl
+spec:
+  containers:
+    - name: curl
+      image: khannedy/nginx-curl

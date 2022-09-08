@@ -1,28 +1,7 @@
-# INGRESS
-## Masalah Saat Mengekspos Service
-### Jika menggunakan NodePort
-* maka semua Node harus terekspos ke public (bahaya)
-* client harus tau semua ip address semua Node
-
-
-### Jika menggunakan LoadBalancer<br>
-* semua LoadBalancer harus terekspos ke public.
-* client harus tau semua ip address semua LoadBalancer (1 service 1 ip jd ini ribet)
-
-# PENGENALAN INGRESS (memakai domain)
-Ingress adalah salah satu cara yang bisa digunakan untuk mengekspos Service<br>
-Berbeda dengan LoadBalancer atau NodePort, jika menggunakan Ingress, client hanya butuh tahu satu lokasi ip adddress Ingress<br>
-Ketika client melakukan request ke Ingress, pemilihan service nya ditentukan menggunakan hostname dari request (bisa memakai hostname sama tp pathnya beda, ex example.com/serviceA, example.com/serviceB <br>
-Ingress hanya mendukung protocol HTTP, jd tdk bisa memakai gRPC (yg melalui tcp socket)<br>
-https://github.com/khannedy/belajar-kubernetes/blob/master/templates/service-with-ingress.yaml<br>
-untuk mengakses ingress hrs set up domain (hosting), domain hosting == domain ingress.<br>
-pd kasus template kita hrs beli domain sub.domain.com & sub2.domain.com<br>
-ubah ip (dik dr perintah minikube ip) jd domain dg register ip lewat etc/hosts disertai.<br>
-if lewat vscode dg domain lewat perintah terminal : code /etc/hosts<br>
-copas ip (dik dr perintah minikube ip) lalu tulis dibaris terakhir<br>
-IP domain<br>
-ex => 192.168.99.104 sub.domain.com<br>
-nanti ketika kita visit sub.domain.com akan diteruskan ke ip 192.168.99.104 dari ip ini(ingress) diteruskan ke service yg sesuai dg domain yg client visit
- 
-
-
+# Multi Container Pod
+Saat menggunakan Docker, kita selalu diajarkan bahwa 1 aplikasi adalah 1 container<br>
+Di Kubernetes agak sedikit berbeda, saat kita deploy aplikasi kita, maka dia akan disimpan dalam 1 pod. Kenapa pod? tidak container, karena sebenarnya di dalam pod, kita bisa menambahkan banyak container (1 pod bisa multi container)<br>
+Ini cocok sekali jika memang kita butuh aplikasi yang berjalan dibeberapa container, dan jika ingin scale, harus semua nya ikut scale. ex our app php yg tdk bisa run sendiri perlu nginx/apache http so kita  bisa run dlm 2 container (1 untuk php, 2 nginx/apache) yg kita bungkus dlm 1 pod<br>
+saat kita ingin duplikat our app tinggal buat saja pod ke 2<br>
+INGAT saat run multiple container maka ip dan port-nya nya akan sharing dlm 1 pod tersebut (tdk bisa our app php portnya 80 & nginx juga 80 itu akan bentrok. INGAT INI DIDLM POD KUBERNETES BUKAN CONTAINER DOCKER)<br>
+contoh https://github.com/khannedy/belajar-kubernetes/blob/master/examples/multi-container-pod.yaml<br>
