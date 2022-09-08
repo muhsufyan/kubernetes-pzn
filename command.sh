@@ -1,8 +1,15 @@
 kubectl get all
-kubectl create -f sharing-volume.yaml
+kubectl create -f environment-variable.yaml
 kubectl get all
-# coba akses
-minikube service nginx-service
-# kunjungi url di browser. yg ditampilkan di client adlh nginx sedangkan yg membuat datanya (write) adlh nodejs
-# now sdh sharing volume (nginx akses volume, nodejs write volume tiap 5 detik)
+# coba akses inside pod nodejs-writer
+kubectl exec -it nodejs-writer -- /bin/sh
+# show all env var
+env
+# cari HTML_LOCATION
+# make sure save to that volume
+cd /app/folder-from-env
+ls 
+# see code html file (update every 5 minutes)
+cat index.html
+exit
 kubectl delete all --all
