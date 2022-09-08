@@ -1,9 +1,21 @@
-kubectl get all
-kubectl create -f service-nginx-loadbalancer.yaml
-kubectl get all
-# see TYPE nya LoadBalancer, PORT(S) 80:31067 dimana 31067 adlh node port nya
+# run/menjlnkan ingress di minikube
+# show all list addons yg ada di minikube
+minikube addons list
+minikube addons enable ingress
+# liat proses sdh beres/blm
+kubectl get pods --namespace kube-system
 
-# NAME nya adlh service/nginx-service
-# kita akan melihat IP:PORT atau URL yg ekspos dg perintah
-minikube service {nama service}
-minikube service nginx-service
+kubectl create -f ingress.yaml
+# show all ingress
+kubectl get ingresses
+kubectl delete ingress {nama ingress}
+# see ip minikube
+minikube ip
+
+# LATIHAN
+kubectl create -f service-nginx-ingress.yaml
+kubectl get all
+kubectl get ingresses
+
+kubectl delete ingresses nginx-service
+kubectl delete all --all
