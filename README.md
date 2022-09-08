@@ -1,14 +1,7 @@
-# SECRET
-digunakan untuk data yg sensitif, sprti token pi, api key, password, dll
-## data sensitif
-Saat kita menggunakan ConfigMap, maka data yang ada dalam ConfigMap dianggap tidak sensitive<br>
-Tapi, kadang konfigurasi aplikasi kita, butuh data yang sifatnya sensitive, seperti username password database, API Key, Secret key, dan sejenisnya<br>
-Untuk menyimpan jenis data sensitive seperti itu, di Kubernetes kita bisa menggunakan object yang disebut Secret. Secret sama seperti ConfigMap, berisikan data key-value <br>
-## about secret
-Kubernetes menyimpan Secret secara aman dengan cara hanya mendistribusikan Secret pada Node yang memang hanya membutuhkan Secret tersebut.<br>
-Secret selalu disimpan di memory di Node dan tidak pernah disimpan di physical storage.<br>
-data secret disimpan di master node sendiri (lebih tepatnya di etcd), & Secret disimpan dengan cara di encrypt, sehingga menjadi lebih aman.<br>
-Secara sederhana, gunakan ConfigMap untuk konfigurasi yang tidak sensitif, dan gunakan Secret untuk konfigurasi yang bersifat sensitif.<br>
-
-https://github.com/khannedy/belajar-kubernetes/blob/master/templates/secret.yaml<br>
-
+lihat perbedaan env var, configmap, & downward api. maka downward api tdk perlu manual (ini membantu karena ip misalnya itu dinamis)
+# Downward API
+Konfigurasi yang bisa kita set secara manual bisa ditangani dengan baik menggunakan ConfigMap dan Secret, namun bagaimana dengan konfigurasi yang dinamis? Seperti informasi Pod dan Node?<br>
+Kubernetes memiliki Downward API. Downward API bisa memungkinkan kita mengambil informasi seputar Pod dan Node melalui environment variable<br>
+Jangan bingung dengan kata API, Downward API sendiri bukan RESTful API, ini hanya cara untuk mendapatkan informasi seputar Pod dan Node. ex ingin tahu nama pod, node, dll karena tdk mungkin hardcode<br>
+saat run pod nanti donwward api akan inject informasi yg kita perlukan melalui env var. cara mengetahuinya dpt lihat slide 207-209 menggunakan metadata<br>
+https://kubernetes.io/docs/concepts/workloads/pods/downward-api/<br>
