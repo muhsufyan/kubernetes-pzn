@@ -1,12 +1,14 @@
-environment variable saja tdk cukup, terdpt mslh/kelamahan
-## Masalah dengan Hardcode Konfigurasi
-Saat kita meng-hardcode konfigurasi environment variable di file yaml kubernetes, artinya kita harus siap-siap membuat file konfigurasi berbeda-beda tiap jenis environment. Misal jika kita punya environment production, development, dan qa, maka kita harus membuat file untuk tiap environment<br>
-Ini menjd masalah jika sampai kita lupa meng-update file konfigurasi, maka salah-salah kita bisa menggunakan konfigurasi environment yang salah. ini berbahaya karena bisa saja config production & development sama karena lupa tdk update<br>
-solusinya adlh dg menggunakan configMap
-# ConfigMap
-Kubernetes memiliki kemampuan memisahkan konfigurasi dalam object bernama ConfigMap<br>
-Sederhananya, ConfigMap berisi konfigurasi key-value<br>
-Aplikasi tidak perlu membaca konfigurasi langsung ke ConfigMap, melainkan Kubernetes akan mengirim konfigurasi di ConfigMap ke dalam environment variable di container. jd kita ckp buat configMap lalu configMap ini akan diinjek ke env Var kubernetes<br>
-https://github.com/khannedy/belajar-kubernetes/blob/master/templates/configmaps.yaml<br>
-now masing" environment production, development, dan qa dpt kita buat config map nya masing"
+# SECRET
+digunakan untuk data yg sensitif, sprti token pi, api key, password, dll
+## data sensitif
+Saat kita menggunakan ConfigMap, maka data yang ada dalam ConfigMap dianggap tidak sensitive<br>
+Tapi, kadang konfigurasi aplikasi kita, butuh data yang sifatnya sensitive, seperti username password database, API Key, Secret key, dan sejenisnya<br>
+Untuk menyimpan jenis data sensitive seperti itu, di Kubernetes kita bisa menggunakan object yang disebut Secret. Secret sama seperti ConfigMap, berisikan data key-value <br>
+## about secret
+Kubernetes menyimpan Secret secara aman dengan cara hanya mendistribusikan Secret pada Node yang memang hanya membutuhkan Secret tersebut.<br>
+Secret selalu disimpan di memory di Node dan tidak pernah disimpan di physical storage.<br>
+data secret disimpan di master node sendiri (lebih tepatnya di etcd), & Secret disimpan dengan cara di encrypt, sehingga menjadi lebih aman.<br>
+Secara sederhana, gunakan ConfigMap untuk konfigurasi yang tidak sensitif, dan gunakan Secret untuk konfigurasi yang bersifat sensitif.<br>
+
+https://github.com/khannedy/belajar-kubernetes/blob/master/templates/secret.yaml<br>
 
