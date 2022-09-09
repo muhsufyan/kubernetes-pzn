@@ -1,0 +1,35 @@
+# versi api-nya
+apiVersion: autoscaling/v2beta2
+# kindnya hrs HPA
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-name
+spec:
+# untuk deployment mode biasa
+  minReplicas: 3
+# untuk deployment saat sibuk (maks)
+  maxReplicas: 5
+  scaleTargetRef:
+    apiVersion: apps/v1
+    # kind nya, bisa deployment/replicaset/dll
+    kind: Deployment
+    name: deployment-name
+    # metrics-server
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          # kalau rata" penggunaan cpu nya lbh dr 70% maka akan mentrigger hpa (nambah pod otomatis)
+          averageUtilization: 70
+    - type: Resource
+      resource:
+      # hati hati saat metrics-servernya memakai memory karena ada beberapa yg memory-nya tdk mau turun, 
+      # ex java, memory akan naik terus sampai habis. ex app java usage memory 100% kemudian turun 80% maka akan trigger hpa memory trs
+      # ini berbahaya jika maxReplicas 100 akan trs trigger hpa sampai 100 pod & biayapun mahal 
+        name: memory
+        target:
+          type: Utilization
+          # kalau rata" penggunaan memory nya lbh dr 70% maka akan mentrigger hpa (nambah pod otomatis)
+          averageUtilization: 70
