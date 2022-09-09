@@ -1,6 +1,4 @@
-# kubernetes dashboard di minikube
-# install dashboard di minikube
-minikube addons enable dashboard
-kubectl get all --namespace kubernetes-dashboard
-# run dashboard
-minikube dashboard
+kubectl apply -f resources.yaml
+kubectl get all
+
+kubectl delete -f resources.yaml
