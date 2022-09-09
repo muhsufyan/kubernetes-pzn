@@ -1,21 +1,21 @@
-# Rollback Deployment
-Saat misal terjadi masalah ketika deploy aplikasi terbaru menggunakan Deployment, cara yang paling mudah agar tidak terjadi error terlalu lama adalah rollback ke Deployment sebelumnya<br>
-Cara manualnya bisa dilakukan dengan cara meng-update menggunakan Deployment baru, namun versi aplikasinya di set ke versi sebelumnya<br>
-Atau ada cara yang lebih mudah, kita bisa menggunakan fitur rollout Kubernetes untuk rollback Deployment ke versi Deployment sebelumnya<br>
+# PERSISTENT VOLUME
+Persistent Volume sebenarnya hampir mirip dengan Volume, hanya saja cara kerjanya berbeda. Volume yg dulu dg persistent volume itu sama saja hanya ada beberapa hal yg beda & keduanya bersifat persistent (data akan selalu ada, disimpan scra permanen jd tdk akan hilang)<br>
+Cara pembuatan Persistent Volume sedikit lebih ribet dibanding Volume, namun ada beberapa benefit yang bisa didapat jika menggunakan Persistent Volume. jika volume ingin mdh dimanage gunakan persistent volume<br>
+## Jenis-Jenis Persistence Volume
+* HostPath, berkas disimpan di Node, tidak direkomendasikan di production, hanya untuk testing, karena datanya bisa hilang
+* GCEPersistentDisk, Google Cloud Persistence Disk
+* AWSElasticBlockStore, Amazon Web Service Persistence Disk
+* AzureFile / AzureDisk, Microsoft Azure Persistence Disk
+* dan lain-lain
 
-## rollout
-mrpkn perintah yg digunakan untuk melihat proses update deployment, tdk semua punya kemampuan melakukan rollout hanya beberapa<br>
-untuk mengetahui resource apa saja yg punya kemampuan rollout perintahnya<br>
-kubectl rollout<br>
-hanya ada 3 yg punya kemampuan rollout : deployments, daemonsets, statefulsets<br>
-## kubernetes rollout
-brkt adlh perintah yg digunakan untuk melihat perubahan rollout<br>
-NOTE object nya diganti dg pilih salah satu brkt deployments, daemonsets, statefulsets<br>
-* kubectl rollout history {object} {name deployment nya} # Melihat history rollout
-* kubectl rollout pause {object} {name deployment nya} # Menandai sebagai pause
-* kubectl rollout resume {object} {name deployment nya} # Resume pause
-* kubectl rollout restart {object} {name deployment nya} # Merestart rollout
-* kubectl rollout status {object} {name deployment nya} # Melihat status rollout
-* kubectl rollout undo {object} {name deployment nya} # Undo ke rollout sebelumnya (rollback)
+## Tahapan Persistent Volume
+if pd volume biasa kita tinggal buat volume lalu mounting ke pod , sdngkan persistent volume lbh ribet, tahapannya<br>
+* Membuat Persistent Volume(buat yaml file, bisa kita tentukan ukuran volume nya sprti 10 GB)
+* Membuat Persistent Volume Claim
+* Menambahkan Persistent Volume Claim ke Pod
+# 
+kelebhan persistent volume, saat kita membuat volume kita set ukuran nya 10 GB if use volume biasa jika terdpt 3 pod maka 1 pod bisa mengonsumsi 10 GB jd volume habis oleh 1 pod saja (pod lainnya tdk kebagian)<br> sedangkan dg persistent volume kita harus buat claim dulu disinilah kita tentukan pod 1 dpt menerima (storage nya) misalnya 2 GB (claim 2GB), kita tentukan pod 2 dpt menerima (storage nya) misalnya 2 GB (claim 2GB), dan kita tentukan pod 3 dpt menerima (storage nya) misalnya 2 GB (claim 2GB). lihat slide 237<br>
 
-## kita coba implementasinya deployment lalu update deployment versi 2 lalu upadate versi 3, lalu kita rollback ke versi 2
+template https://github.com/khannedy/belajar-kubernetes/blob/master/templates/persistent-volume.yaml<br>
+
+
