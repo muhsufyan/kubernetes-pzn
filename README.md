@@ -1,21 +1,24 @@
-# PERSISTENT VOLUME
-Persistent Volume sebenarnya hampir mirip dengan Volume, hanya saja cara kerjanya berbeda. Volume yg dulu dg persistent volume itu sama saja hanya ada beberapa hal yg beda & keduanya bersifat persistent (data akan selalu ada, disimpan scra permanen jd tdk akan hilang)<br>
-Cara pembuatan Persistent Volume sedikit lebih ribet dibanding Volume, namun ada beberapa benefit yang bisa didapat jika menggunakan Persistent Volume. jika volume ingin mdh dimanage gunakan persistent volume<br>
-## Jenis-Jenis Persistence Volume
-* HostPath, berkas disimpan di Node, tidak direkomendasikan di production, hanya untuk testing, karena datanya bisa hilang
-* GCEPersistentDisk, Google Cloud Persistence Disk
-* AWSElasticBlockStore, Amazon Web Service Persistence Disk
-* AzureFile / AzureDisk, Microsoft Azure Persistence Disk
-* dan lain-lain
+# StatefulSet
+Pod, ReplicaSet, ReplicationController, Deployment, itu semua cocok digunakan untuk aplikasi jenis stateless<br>
+Stateless artinya aplikasi kita tidak menyimpan state atau data. Jadi jika ditengah jalan aplikasi kita dihapus dan dibuat ulang, tidak akan bermasalah<br>
+Namun bagaimana dengan aplikasi yang stateful? Seperti contohnya database? Yang harus menyimpan data? Dan tidak bisa sembarangan dihapus di tengah jalan ketika kita melakukan update aplikasi<br>
+mysql, postgresql itu termasuk stateful karena menyimpan data & tdk bisa dihapus sembarangan<br>
+## Stateless dengan Persistent Volume
+PersistentVolume pun tidak akan membantu jika kita memiliki aplikasi yang stateful, karena semua Pod akan meng-claim PersistentVolume yang sama, dan direktori yang sama (dg volume akan sharing folder sedangkan db tdk sharing folder)<br>
+Sedangkan jika aplikasi kita Stateful, kemungkinan besar, kita  ingin memiliki data yang independen tiap Pod, walaupun jenis pod nya sama<br>
+slide 246 kita harus membuat manual 3 deployment (ini tdk bisa)
+## Stateless  vs Stateful
+Jika diibaratkan, Stateless adalah hewan ternak, sedangkan Stateful adalah hewan peliharaan<br>
+* Dalam hewan ternak, kita tidak peduli siapa yang mati, disembelih ataupun hilang, yang penting bisa diganti dengan hewan yang baru
+* Namun berbeda dengan hewan peliharaan, jika ada satu yang sakit, maka kita akan merawatnya sampai sehat, dan jika mati, maka kita akan mencari hewan yang sama karakteristiknya
+# StatefulSet
+StatefulSet adalah object di Kubernetes untuk memanage aplikasi jenis stateful<br>
+StatefulSet akan memastikan bahwa nama pod yang konsisten (sblmnya (stateless) pod ex nama pod itu random), identitas network yang stabil, dan persistent volume yang stabil untuk tiap pod.<br>
+Jika ada Pod yang mati, maka StatefulSet akan membuat Pod baru dengan nama dan informasi yang sama dengan Pod yang mati<br>
+# Membuat StatefulSet
+Membuat StatefulSet sangat mudah, hanya seperti membuat ReplicaSet<br>
+Namun, StatefulSet memiliki kemampuan untuk menambahkan Volume Claim Template (stateful perlu claim-nya per pod, tdk global)<br>
+https://github.com/khannedy/belajar-kubernetes/blob/master/templates/statefulset.yaml<br>
 
-## Tahapan Persistent Volume
-if pd volume biasa kita tinggal buat volume lalu mounting ke pod , sdngkan persistent volume lbh ribet, tahapannya<br>
-* Membuat Persistent Volume(buat yaml file, bisa kita tentukan ukuran volume nya sprti 10 GB)
-* Membuat Persistent Volume Claim
-* Menambahkan Persistent Volume Claim ke Pod
-# 
-kelebhan persistent volume, saat kita membuat volume kita set ukuran nya 10 GB if use volume biasa jika terdpt 3 pod maka 1 pod bisa mengonsumsi 10 GB jd volume habis oleh 1 pod saja (pod lainnya tdk kebagian)<br> sedangkan dg persistent volume kita harus buat claim dulu disinilah kita tentukan pod 1 dpt menerima (storage nya) misalnya 2 GB (claim 2GB), kita tentukan pod 2 dpt menerima (storage nya) misalnya 2 GB (claim 2GB), dan kita tentukan pod 3 dpt menerima (storage nya) misalnya 2 GB (claim 2GB). lihat slide 237<br>
-
-template https://github.com/khannedy/belajar-kubernetes/blob/master/templates/persistent-volume.yaml<br>
 
 

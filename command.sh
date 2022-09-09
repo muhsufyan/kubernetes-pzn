@@ -1,28 +1,26 @@
-# buat persistent volume
-kubectl create -f fileConfigpersistentVolume.yaml
+# buat statefulSet
+kubectl create -f fileConfigStatefulSet.yaml
 # atau 
-kubectl apply -f fileConfigpersistentVolume.yaml
-# show persistent volume
-kubectl get pv
-# detail persistent volume
-kubectl describe pv {nama persistent volume}
-# show persistent volume claim
-kubectl get pvc 
-# detail persistent volume claim
-kubectl describe pvc {nama persistent volume claim}
-# delete persistent volume
-kubectl delete pv {nama persistent volume}
-# delete persistent volume claim
-kubectl delete pvc {nama persistent volume claim}
+kubectl apply -f fileConfigStatefulSet.yaml
+# show statefulSet
+kubectl get statefulsets
+# detail statefulSet
+kubectl describe statefulset {nama statefulSet}
+# delete statefulSet
+kubectl delete statefulset {nama statefulSet}
 
 # LATIHAN
-kubectl apply -f persistent-volume.yaml
-kubectl get -f persistent-volume.yaml
-# masuk kedlm pod nodejs-writer
-kubectl exec -it nodejs-writer -- /bin/sh
-# masuk ke mounting volume
-cd /app/html
-ls -l
-cat index.html
-exit
-# hapus persistent volume & claim nya
+kubectl apply -f statefulset.yaml
+kubectl get all
+# run nya akan 1 per satu (tdk semuanya langsung sprti deployment), total podnya 3
+kubectl get all
+kubectl get all
+kubectl get pvc
+# akan ada 3 pvc
+# KITA COBA DELETE 1 POD (index mulai dr 0, kita hapus pod ke 2)
+kubectl delete pod nodejs-stateful-1
+kubectl get all
+# akan dibuatkan 1 pod baru dg info yg sama persis dg pod yg dihapus
+kubectl get pvc
+# pvc nya pun sama
+# hapus statefulset
